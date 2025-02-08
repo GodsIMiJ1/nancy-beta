@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nancy Beta - Enhanced Effects</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #1B1135;
+      color: #4A7AFF;
+      font-family: monospace;
+    }
+    canvas {
+      display: block;
+    }
+    .message {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      text-align: center;
+      color: #FFFFFF;
+      font-size: 2em;
+      transform: translateY(-50%);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrixCanvas"></canvas>
+  <div class="message">Nancy Beta - A Taste of What's Coming</div>
+  <script>
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(0);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(27, 17, 53, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#00F0FF";
+      ctx.font = fontSize + "px monospace";
+
+      for(let i = 0; i < drops.length; i++) {
+        const char = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+        if(drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+          drops[i] = 0;
+        drops[i]++;
+      }
+    }
+    setInterval(drawMatrix, 50);
+  </script>
+</body>
+</html>
